@@ -1,0 +1,437 @@
+{
+  "name": {
+    "en": "whatwatt Go"
+  },
+  "class": "sensor",
+  "capabilities": [
+    "measure_power",
+    "measure_power.export",
+    "measure_power.phase1",
+    "measure_power.phase2", 
+    "measure_power.phase3",
+    "measure_power.phase1_export",
+    "measure_power.phase2_export",
+    "measure_power.phase3_export",
+    "measure_voltage.phase1",
+    "measure_voltage.phase2",
+    "measure_voltage.phase3",
+    "measure_current.phase1",
+    "measure_current.phase2",
+    "measure_current.phase3",
+    "meter_power.imported",
+    "meter_power.exported",
+    "meter_power.imported_tariff1",
+    "meter_power.imported_tariff2",
+    "meter_power.exported_tariff1",
+    "meter_power.exported_tariff2",
+    "measure_power_reactive_in",
+    "measure_power_reactive_out",
+    "measure_power_factor"
+  ],
+  "energy": {
+    "cumulative": true,
+    "cumulativeImportedCapability": "meter_power.imported",
+    "cumulativeExportedCapability": "meter_power.exported"
+  },
+  "capabilitiesOptions": {
+    "measure_power": {
+      "title": {
+        "en": "Power Import",
+        "nl": "Vermogen Import",
+        "de": "Leistung Import",
+        "fr": "Puissance Import",
+        "it": "Potenza Import",
+        "sv": "Effekt Import",
+        "no": "Effekt Import",
+        "es": "Potencia Import",
+        "da": "Effekt Import",
+        "ru": "Мощность Импорт",
+        "pl": "Moc Import",
+        "ko": "전력 수입"
+      }
+    },
+    "measure_power.export": {
+      "title": {
+        "en": "Power Export",
+        "nl": "Vermogen Export",
+        "de": "Leistung Export",
+        "fr": "Puissance Export",
+        "it": "Potenza Export",
+        "sv": "Effekt Export",
+        "no": "Effekt Export",
+        "es": "Potencia Export",
+        "da": "Effekt Export",
+        "ru": "Мощность Экспорт",
+        "pl": "Moc Export",
+        "ko": "전력 수출"
+      }
+    },
+    "measure_power.phase1": {
+      "title": {
+        "en": "Power (Phase 1)",
+        "nl": "Vermogen (Fase 1)",
+        "de": "Leistung (Phase 1)",
+        "fr": "Puissance (Phase 1)",
+        "it": "Potenza (Fase 1)",
+        "sv": "Effekt (Fas 1)",
+        "no": "Effekt (Fase 1)",
+        "es": "Potencia (Fase 1)",
+        "da": "Effekt (Fase 1)",
+        "ru": "Мощность (Фаза 1)",
+        "pl": "Moc (Faza 1)",
+        "ko": "전력 (상 1)"
+      }
+    },
+    "measure_power.phase2": {
+      "title": {
+        "en": "Power (Phase 2)",
+        "nl": "Vermogen (Fase 2)",
+        "de": "Leistung (Phase 2)",
+        "fr": "Puissance (Phase 2)",
+        "it": "Potenza (Fase 2)",
+        "sv": "Effekt (Fas 2)",
+        "no": "Effekt (Fase 2)",
+        "es": "Potencia (Fase 2)",
+        "da": "Effekt (Fase 2)",
+        "ru": "Мощность (Фаза 2)",
+        "pl": "Moc (Faza 2)",
+        "ko": "전력 (상 2)"
+      }
+    },
+    "measure_power.phase3": {
+      "title": {
+        "en": "Power (Phase 3)",
+        "nl": "Vermogen (Fase 3)",
+        "de": "Leistung (Phase 3)",
+        "fr": "Puissance (Phase 3)",
+        "it": "Potenza (Fase 3)",
+        "sv": "Effekt (Fas 3)",
+        "no": "Effekt (Fase 3)",
+        "es": "Potencia (Fase 3)",
+        "da": "Effekt (Fase 3)",
+        "ru": "Мощность (Фаза 3)",
+        "pl": "Moc (Faza 3)",
+        "ko": "전력 (상 3)"
+      }
+    },
+    "measure_power.phase1_export": {
+      "title": {
+        "en": "Power Export (Phase 1)",
+        "nl": "Vermogen Export (Fase 1)",
+        "de": "Leistung Export (Phase 1)",
+        "fr": "Puissance Export (Phase 1)",
+        "it": "Potenza Export (Fase 1)",
+        "sv": "Effekt Export (Fas 1)",
+        "no": "Effekt Export (Fase 1)",
+        "es": "Potencia Export (Fase 1)",
+        "da": "Effekt Export (Fase 1)",
+        "ru": "Мощность Экспорт (Фаза 1)",
+        "pl": "Moc Export (Faza 1)",
+        "ko": "전력 수출 (상 1)"
+      }
+    },
+    "measure_power.phase2_export": {
+      "title": {
+        "en": "Power Export (Phase 2)",
+        "nl": "Vermogen Export (Fase 2)",
+        "de": "Leistung Export (Phase 2)",
+        "fr": "Puissance Export (Phase 2)",
+        "it": "Potenza Export (Fase 2)",
+        "sv": "Effekt Export (Fas 2)",
+        "no": "Effekt Export (Fase 2)",
+        "es": "Potencia Export (Fase 2)",
+        "da": "Effekt Export (Fase 2)",
+        "ru": "Мощность Экспорт (Фаза 2)",
+        "pl": "Moc Export (Faza 2)",
+        "ko": "전력 수출 (상 2)"
+      }
+    },
+    "measure_power.phase3_export": {
+      "title": {
+        "en": "Power Export (Phase 3)",
+        "nl": "Vermogen Export (Fase 3)",
+        "de": "Leistung Export (Phase 3)",
+        "fr": "Puissance Export (Phase 3)",
+        "it": "Potenza Export (Fase 3)",
+        "sv": "Effekt Export (Fas 3)",
+        "no": "Effekt Export (Fase 3)",
+        "es": "Potencia Export (Fase 3)",
+        "da": "Effekt Export (Fase 3)",
+        "ru": "Мощность Экспорт (Фаза 3)",
+        "pl": "Moc Export (Faza 3)",
+        "ko": "전력 수출 (상 3)"
+      }
+    },
+    "measure_voltage.phase1": {
+      "title": {
+        "en": "Voltage (Phase 1)",
+        "nl": "Spanning (Fase 1)",
+        "de": "Spannung (Phase 1)",
+        "fr": "Tension (Phase 1)",
+        "it": "Tensione (Fase 1)",
+        "sv": "Spänning (Fas 1)",
+        "no": "Spenning (Fase 1)",
+        "es": "Tensión (Fase 1)",
+        "da": "Spænding (Fase 1)",
+        "ru": "Напряжение (Фаза 1)",
+        "pl": "Napięcie (Faza 1)",
+        "ko": "전압 (상 1)"
+      }
+    },
+    "measure_voltage.phase2": {
+      "title": {
+        "en": "Voltage (Phase 2)",
+        "nl": "Spanning (Fase 2)",
+        "de": "Spannung (Phase 2)",
+        "fr": "Tension (Phase 2)",
+        "it": "Tensione (Fase 2)",
+        "sv": "Spänning (Fas 2)",
+        "no": "Spenning (Fase 2)",
+        "es": "Tensión (Fase 2)",
+        "da": "Spænding (Fase 2)",
+        "ru": "Напряжение (Фаза 2)",
+        "pl": "Napięcie (Faza 2)",
+        "ko": "전압 (상 2)"
+      }
+    },
+    "measure_voltage.phase3": {
+      "title": {
+        "en": "Voltage (Phase 3)",
+        "nl": "Spanning (Fase 3)",
+        "de": "Spannung (Phase 3)",
+        "fr": "Tension (Phase 3)",
+        "it": "Tensione (Fase 3)",
+        "sv": "Spänning (Fas 3)",
+        "no": "Spenning (Fase 3)",
+        "es": "Tensión (Fase 3)",
+        "da": "Spænding (Fase 3)",
+        "ru": "Напряжение (Фаза 3)",
+        "pl": "Napięcie (Faza 3)",
+        "ko": "전압 (상 3)"
+      }
+    },
+    "measure_current.phase1": {
+      "title": {
+        "en": "Current (Phase 1)",
+        "nl": "Stroom (Fase 1)",
+        "de": "Strom (Phase 1)",
+        "fr": "Courant (Phase 1)",
+        "it": "Corrente (Fase 1)",
+        "sv": "Ström (Fas 1)",
+        "no": "Strøm (Fase 1)",
+        "es": "Corriente (Fase 1)",
+        "da": "Strøm (Fase 1)",
+        "ru": "Ток (Фаза 1)",
+        "pl": "Prąd (Faza 1)",
+        "ko": "전류 (상 1)"
+      }
+    },
+    "measure_current.phase2": {
+      "title": {
+        "en": "Current (Phase 2)",
+        "nl": "Stroom (Fase 2)",
+        "de": "Strom (Phase 2)",
+        "fr": "Courant (Phase 2)",
+        "it": "Corrente (Fase 2)",
+        "sv": "Ström (Fas 2)",
+        "no": "Strøm (Fase 2)",
+        "es": "Corriente (Fase 2)",
+        "da": "Strøm (Fase 2)",
+        "ru": "Ток (Фаза 2)",
+        "pl": "Prąd (Faza 2)",
+        "ko": "전류 (상 2)"
+      }
+    },
+    "measure_current.phase3": {
+      "title": {
+        "en": "Current (Phase 3)",
+        "nl": "Stroom (Fase 3)",
+        "de": "Strom (Phase 3)",
+        "fr": "Courant (Phase 3)",
+        "it": "Corrente (Fase 3)",
+        "sv": "Ström (Fas 3)",
+        "no": "Strøm (Fase 3)",
+        "es": "Corriente (Fase 3)",
+        "da": "Strøm (Fase 3)",
+        "ru": "Ток (Фаза 3)",
+        "pl": "Prąd (Faza 3)",
+        "ko": "전류 (상 3)"
+      }
+    },
+    "meter_power.imported": {
+      "title": {
+        "en": "Total Energy Imported",
+        "nl": "Totaal Energie Geïmporteerd",
+        "de": "Gesamtenergie Importiert",
+        "fr": "Énergie Totale Importée",
+        "it": "Energia Totale Importata",
+        "sv": "Total Energi Importerad",
+        "no": "Total Energi Importert",
+        "es": "Energía Total Importada",
+        "da": "Total Energi Importeret",
+        "ru": "Общая Импортированная Энергия",
+        "pl": "Całkowita Energia Zaimportowana",
+        "ko": "총 수입 에너지"
+      },
+      "decimals": 3
+    },
+    "meter_power.exported": {
+      "title": {
+        "en": "Total Energy Exported",
+        "nl": "Totaal Energie Geëxporteerd",
+        "de": "Gesamtenergie Exportiert",
+        "fr": "Énergie Totale Exportée",
+        "it": "Energia Totale Esportata",
+        "sv": "Total Energi Exporterad",
+        "no": "Total Energi Eksportert",
+        "es": "Energía Total Exportada",
+        "da": "Total Energi Eksporteret",
+        "ru": "Общая Экспортированная Энергия",
+        "pl": "Całkowita Energia Wyeksportowana",
+        "ko": "총 수출 에너지"
+      },
+      "decimals": 3
+    },
+    "meter_power.imported_tariff1": {
+      "title": {
+        "en": "Energy Imported (Low Tariff)",
+        "nl": "Energie Geïmporteerd (Laag Tarief)",
+        "de": "Energie Importiert (Niedertarif)",
+        "fr": "Énergie Importée (Tarif Bas)",
+        "it": "Energia Importata (Tariffa Bassa)",
+        "sv": "Energi Importerad (Låg Tariff)",
+        "no": "Energi Importert (Lav Tariff)",
+        "es": "Energía Importada (Tarifa Baja)",
+        "da": "Energi Importeret (Lav Tarif)",
+        "ru": "Импортированная Энергия (Низкий Тариф)",
+        "pl": "Energia Zaimportowana (Niska Taryfa)",
+        "ko": "수입 에너지 (저가 요금)"
+      },
+      "decimals": 3
+    },
+    "meter_power.imported_tariff2": {
+      "title": {
+        "en": "Energy Imported (High Tariff)",
+        "nl": "Energie Geïmporteerd (Hoog Tarief)",
+        "de": "Energie Importiert (Hochtarif)",
+        "fr": "Énergie Importée (Tarif Haut)",
+        "it": "Energia Importata (Tariffa Alta)",
+        "sv": "Energi Importerad (Hög Tariff)",
+        "no": "Energi Importert (Høy Tariff)",
+        "es": "Energía Importada (Tarifa Alta)",
+        "da": "Energi Importeret (Høj Tarif)",
+        "ru": "Импортированная Энергия (Высокий Тариф)",
+        "pl": "Energia Zaimportowana (Wysoka Taryfa)",
+        "ko": "수입 에너지 (고가 요금)"
+      },
+      "decimals": 3
+    },
+    "meter_power.exported_tariff1": {
+      "title": {
+        "en": "Energy Exported (Low Tariff)",
+        "nl": "Energie Geëxporteerd (Laag Tarief)",
+        "de": "Energie Exportiert (Niedertarif)",
+        "fr": "Énergie Exportée (Tarif Bas)",
+        "it": "Energia Esportata (Tariffa Bassa)",
+        "sv": "Energi Exporterad (Låg Tariff)",
+        "no": "Energi Eksportert (Lav Tariff)",
+        "es": "Energía Exportada (Tarifa Baja)",
+        "da": "Energi Eksporteret (Lav Tarif)",
+        "ru": "Экспортированная Энергия (Низкий Тариф)",
+        "pl": "Energia Wyeksportowana (Niska Taryfa)",
+        "ko": "수출 에너지 (저가 요금)"
+      },
+      "decimals": 3
+    },
+    "meter_power.exported_tariff2": {
+      "title": {
+        "en": "Energy Exported (High Tariff)",
+        "nl": "Energie Geëxporteerd (Hoog Tarief)",
+        "de": "Energie Exportiert (Hochtarif)",
+        "fr": "Énergie Exportée (Tarif Haut)",
+        "it": "Energia Esportata (Tariffa Alta)",
+        "sv": "Energi Exporterad (Hög Tariff)",
+        "no": "Energi Eksportert (Høy Tariff)",
+        "es": "Energía Exportada (Tarifa Alta)",
+        "da": "Energi Eksporteret (Høj Tarif)",
+        "ru": "Экспортированная Энергия (Высокий Тариф)",
+        "pl": "Energia Wyeksportowana (Wysoka Taryfa)",
+        "ko": "수출 에너지 (고가 요금)"
+      },
+      "decimals": 3
+    },
+    "measure_power_reactive_in": {
+      "title": {
+        "en": "Reactive Power In",
+        "nl": "Reactief Vermogen In",
+        "de": "Blindleistung Ein",
+        "fr": "Puissance Réactive Entrée",
+        "it": "Potenza Reattiva Ingresso",
+        "sv": "Reaktiv Effekt In",
+        "no": "Reaktiv Effekt Inn",
+        "es": "Potencia Reactiva Entrada",
+        "da": "Reaktiv Effekt Ind",
+        "ru": "Реактивная Мощность Вход",
+        "pl": "Moc Bierna Wejście",
+        "ko": "무효 전력 입력"
+      }
+    },
+    "measure_power_reactive_out": {
+      "title": {
+        "en": "Reactive Power Out",
+        "nl": "Reactief Vermogen Uit",
+        "de": "Blindleistung Aus",
+        "fr": "Puissance Réactive Sortie",
+        "it": "Potenza Reattiva Uscita",
+        "sv": "Reaktiv Effekt Ut",
+        "no": "Reaktiv Effekt Ut",
+        "es": "Potencia Reactiva Salida",
+        "da": "Reaktiv Effekt Ud",
+        "ru": "Реактивная Мощность Выход",
+        "pl": "Moc Bierna Wyjście",
+        "ko": "무효 전력 출력"
+      }
+    },
+    "measure_power_factor": {
+      "title": {
+        "en": "Power Factor",
+        "nl": "Arbeidsfactor",
+        "de": "Leistungsfaktor",
+        "fr": "Facteur de Puissance",
+        "it": "Fattore di Potenza",
+        "sv": "Effektfaktor",
+        "no": "Effektfaktor",
+        "es": "Factor de Potencia",
+        "da": "Effektfaktor",
+        "ru": "Коэффициент Мощности",
+        "pl": "Współczynnik Mocy",
+        "ko": "역률"
+      }
+    }
+  },
+  "platforms": [
+    "local"
+  ],
+  "connectivity": [
+    "lan"
+  ],
+  "discovery": "whatwatt-go-mdns",
+  "pair": [
+    {
+      "id": "list_whatwatt_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_whatwatt_devices"
+      }
+    },
+    {
+      "id": "add_whatwatt_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  }
+}

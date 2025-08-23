@@ -1,0 +1,3 @@
+whatwatt för med realtids energiinblick till Homey. Med whatwatt Go — en enkel, universell enhet för smarta mätare — får du säker, omedelbar åtkomst till din förbrukningsdata. Använd dessa insikter för att anpassa beteende, övervaka och kontrollera belastningar, ta emot tidiga varningar, bedöma prestanda och allokera kostnader, så att du ökar den lokala energieffektiviteten och minskar räkningar.
+
+Byggt som ett öppet, skalbart ekosystem passar whatwatt hushåll, företag och virtuella organisationer. Genom att göra realtidsdata tillgänglig för alla hjälper whatwatt till att undvika efterfrågetoppar på ett sätt som är meningsfullt för användare och leverantörer, och stöder en säker energiförsörjning och den bredare energitransitionen i Schweiz.

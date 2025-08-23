@@ -1,0 +1,41 @@
+{
+  "id": "ch.whatwatt",
+  "version": "0.1.0",
+  "compatibility": ">=12.4.0",
+  "sdk": 3,
+  "brandColor": "#000000",
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "whatwatt"
+  },
+  "description": {
+    "en": "Connect. Control. Contribute."
+  },
+  "category": [
+    "energy"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "whatwatt AG",
+    "email": "abe.haverkamp+whatwatt@homey.app"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Abe Haverkamp (developer)"
+      },
+      {
+        "name": "Bas van der Ploeg (icons)"
+      }
+    ]
+  },
+  "source": "https://github.com/Doekse/whatwatt-homey",
+  "support": "mailto:abe.haverkamp+whatwatt@homey.app"
+}

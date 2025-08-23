@@ -1,0 +1,15 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Reactive Power In",
+    "nl": "Reactief Vermogen In"
+  },
+  "units": {
+    "en": "var",
+    "nl": "var"
+  },
+  "decimals": 0,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor"
+}

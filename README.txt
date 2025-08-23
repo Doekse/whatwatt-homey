@@ -1,0 +1,3 @@
+whatwatt brings real-time energy insight to Homey. With whatwatt Go — a simple, universal device for smart meters — you get secure, instant access to your consumption data. Use these insights to adapt behaviour, monitor and control loads, receive timely alerts, assess performance and allocate costs, so you increase local energy efficiency and reduce bills.
+
+Built as an open, scalable ecosystem, whatwatt fits households, businesses and virtual organisations alike. By making real-time data available to everyone, whatwatt helps avoid demand peaks in a way that makes sense for users and providers, supporting a secure energy supply and the broader energy transition in Switzerland.
