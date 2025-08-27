@@ -1,0 +1,40 @@
+{
+  "pair": {
+    "password_input": {
+      "title": "Device Protection",
+      "subtitle": "Bitte geben Sie ein Passwort an, wenn Device Protection aktiviert ist",
+      "instructions": "Bitte überprüfen Sie, ob Ihr whatwatt Go \"Device Protection\" aktiviert hat. Sie können dies tun, indem Sie die Geräteeinstellungen in der Web-UI überprüfen. Wenn es aktiviert ist, geben Sie das Passwort unten ein. Wenn es deaktiviert ist, lassen Sie das Feld leer. Drücken Sie anschließend \"Weiter\", um mit der Kopplung fortzufahren",
+      "password_label": "Passwort",
+      "password_placeholder": "Passwort",
+      "continue_button": "Weiter",
+      "error_message": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+    },
+    "repair_input": {
+      "title": "Gerät reparieren",
+      "subtitle": "Reparieren Sie ein Gerät, wenn es nicht wie erwartet funktioniert",
+      "instructions": "Gerätereparatur kann verwendet werden, um das für \"Device Protection\" verwendete Passwort zu aktualisieren und die Gerätefunktionen basierend auf dem, was Ihr Smart Meter unterstützt, neu zu initialisieren. Wenn Ihr whatwatt Go \"Device Protection\" aktiviert hat, geben Sie das Passwort unten ein. Wenn es deaktiviert ist, lassen Sie das Feld leer. Das Passwort wird während des Reparaturprozesses getestet.",
+      "password_label": "Passwort",
+      "password_placeholder": "Passwort",
+      "repair_button": "Gerät reparieren"
+    }
+  },
+  "settings": {
+    "device_information": {
+      "label": "Geräte Informationen",
+      "device_id": "Geräte ID",
+      "model": "Modell",
+      "firmware": "Firmware Version"
+    },
+    "meter_information": {
+      "label": "Zähler Informationen",
+      "interface": "Schnittstelle",
+      "meter_id": "Zähler ID",
+      "manufacturer": "Hersteller",
+      "type": "Typ",
+      "model": "Modell",
+      "protocol": "Protokoll",
+      "protocol_version": "Protokoll Version",
+      "report_interval": "Berichtsintervall"
+    }
+  }
+}

@@ -460,6 +460,9 @@
       "discovery": "whatwatt-go-mdns",
       "pair": [
         {
+          "id": "password_input"
+        },
+        {
           "id": "list_whatwatt_devices",
           "template": "list_devices",
           "navigation": {
@@ -471,12 +474,268 @@
           "template": "add_devices"
         }
       ],
+      "repair": [
+        {
+          "id": "repair_input"
+        }
+      ],
       "images": {
         "small": "/drivers/whatwatt-go/assets/images/small.png",
         "large": "/drivers/whatwatt-go/assets/images/large.png",
         "xlarge": "/drivers/whatwatt-go/assets/images/xlarge.png"
       },
-      "id": "whatwatt-go"
+      "id": "whatwatt-go",
+      "settings": [
+        {
+          "id": "device_information",
+          "type": "group",
+          "label": {
+            "en": "Device Information",
+            "nl": "Apparaat Informatie",
+            "de": "Geräte Informationen",
+            "fr": "Informations sur l'appareil",
+            "it": "Informazioni dispositivo",
+            "sv": "Enhetsinformation",
+            "no": "Enhetsinformasjon",
+            "es": "Información del dispositivo",
+            "da": "Enhedsinformation",
+            "ru": "Информация об устройстве",
+            "pl": "Informacje o urządzeniu",
+            "ko": "장치 정보"
+          },
+          "children": [
+            {
+              "id": "device_id",
+              "type": "label",
+              "label": {
+                "en": "Device ID",
+                "nl": "Apparaat ID",
+                "de": "Geräte ID",
+                "fr": "ID de l'appareil",
+                "it": "ID dispositivo",
+                "sv": "Enhets-ID",
+                "no": "Enhets-ID",
+                "es": "ID del dispositivo",
+                "da": "Enheds-ID",
+                "ru": "ID устройства",
+                "pl": "ID urządzenia",
+                "ko": "장치 ID"
+              },
+              "value": "Loading..."
+            },
+            {
+              "id": "device_model",
+              "type": "label",
+              "label": {
+                "en": "Model",
+                "nl": "Model",
+                "de": "Modell",
+                "fr": "Modèle",
+                "it": "Modello",
+                "sv": "Modell",
+                "no": "Modell",
+                "es": "Modelo",
+                "da": "Model",
+                "ru": "Модель",
+                "pl": "Model",
+                "ko": "모델"
+              },
+              "value": "Loading..."
+            },
+            {
+              "id": "device_firmware",
+              "type": "label",
+              "label": {
+                "en": "Firmware Version",
+                "nl": "Firmware Versie",
+                "de": "Firmware Version",
+                "fr": "Version du firmware",
+                "it": "Versione firmware",
+                "sv": "Firmware-version",
+                "no": "Firmware-versjon",
+                "es": "Versión de firmware",
+                "da": "Firmware Version",
+                "ru": "Версия прошивки",
+                "pl": "Wersja oprogramowania",
+                "ko": "펌웨어 버전"
+              },
+              "value": "Loading..."
+            }
+          ]
+        },
+        {
+          "id": "meter_information",
+          "type": "group",
+          "label": {
+            "en": "Meter Information",
+            "nl": "Meter Informatie",
+            "de": "Zähler Informationen",
+            "fr": "Informations du compteur",
+            "it": "Informazioni contatore",
+            "sv": "Mätarinformation",
+            "no": "Målerinformasjon",
+            "es": "Información del medidor",
+            "da": "Målerinformation",
+            "ru": "Информация о счетчике",
+            "pl": "Informacje o liczniku",
+            "ko": "미터 정보"
+          },
+          "children": [
+            {
+              "id": "meter_interface",
+              "type": "label",
+              "label": {
+                "en": "Interface",
+                "nl": "Interface",
+                "de": "Schnittstelle",
+                "fr": "Interface",
+                "it": "Interfaccia",
+                "sv": "Gränssnitt",
+                "no": "Grensesnitt",
+                "es": "Interfaz",
+                "da": "Interface",
+                "ru": "Интерфейс",
+                "pl": "Interfejs",
+                "ko": "인터페이스"
+              },
+              "value": "Loading..."
+            },
+            {
+              "id": "meter_id",
+              "type": "label",
+              "label": {
+                "en": "Meter ID",
+                "nl": "Meter ID",
+                "de": "Zähler ID",
+                "fr": "ID du compteur",
+                "it": "ID contatore",
+                "sv": "Mätar-ID",
+                "no": "Måler-ID",
+                "es": "ID del medidor",
+                "da": "Måler-ID",
+                "ru": "ID счетчика",
+                "pl": "ID licznika",
+                "ko": "미터 ID"
+              },
+              "value": "Loading..."
+            },
+            {
+              "id": "meter_manufacturer",
+              "type": "label",
+              "label": {
+                "en": "Manufacturer",
+                "nl": "Fabrikant",
+                "de": "Hersteller",
+                "fr": "Fabricant",
+                "it": "Produttore",
+                "sv": "Tillverkare",
+                "no": "Produsent",
+                "es": "Fabricante",
+                "da": "Producent",
+                "ru": "Производитель",
+                "pl": "Producent",
+                "ko": "제조업체"
+              },
+              "value": "Loading..."
+            },
+            {
+              "id": "meter_type",
+              "type": "label",
+              "label": {
+                "en": "Type",
+                "nl": "Type",
+                "de": "Typ",
+                "fr": "Type",
+                "it": "Tipo",
+                "sv": "Typ",
+                "no": "Type",
+                "es": "Tipo",
+                "da": "Type",
+                "ru": "Тип",
+                "pl": "Typ",
+                "ko": "유형"
+              },
+              "value": "Loading..."
+            },
+            {
+              "id": "meter_model",
+              "type": "label",
+              "label": {
+                "en": "Model",
+                "nl": "Model",
+                "de": "Modell",
+                "fr": "Modèle",
+                "it": "Modello",
+                "sv": "Modell",
+                "no": "Modell",
+                "es": "Modelo",
+                "da": "Model",
+                "ru": "Модель",
+                "pl": "Model",
+                "ko": "모델"
+              },
+              "value": "Loading..."
+            },
+            {
+              "id": "meter_protocol",
+              "type": "label",
+              "label": {
+                "en": "Protocol",
+                "nl": "Protocol",
+                "de": "Protokoll",
+                "fr": "Protocole",
+                "it": "Protocollo",
+                "sv": "Protokoll",
+                "no": "Protokoll",
+                "es": "Protocolo",
+                "da": "Protokol",
+                "ru": "Протокол",
+                "pl": "Protokół",
+                "ko": "프로토콜"
+              },
+              "value": "Loading..."
+            },
+            {
+              "id": "meter_protocol_version",
+              "type": "label",
+              "label": {
+                "en": "Protocol Version",
+                "nl": "Protocol Versie",
+                "de": "Protokoll Version",
+                "fr": "Version du protocole",
+                "it": "Versione protocollo",
+                "sv": "Protokollversion",
+                "no": "Protokollversjon",
+                "es": "Versión del protocolo",
+                "da": "Protokol Version",
+                "ru": "Версия протокола",
+                "pl": "Wersja protokołu",
+                "ko": "프로토콜 버전"
+              },
+              "value": "Loading..."
+            },
+            {
+              "id": "meter_report_interval",
+              "type": "label",
+              "label": {
+                "en": "Report Interval",
+                "nl": "Rapportage Interval",
+                "de": "Berichtsintervall",
+                "fr": "Intervalle de rapport",
+                "it": "Intervallo di rapporto",
+                "sv": "Rapportintervall",
+                "no": "Rapportintervall",
+                "es": "Intervalo de informe",
+                "da": "Rapport Interval",
+                "ru": "Интервал отчетов",
+                "pl": "Interwał raportowania",
+                "ko": "보고 간격"
+              },
+              "value": "Loading..."
+            }
+          ]
+        }
+      ]
     }
   ],
   "capabilities": {
@@ -495,7 +754,8 @@
       "max": 1,
       "getable": true,
       "setable": false,
-      "uiComponent": "sensor"
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/measure_power_factor.svg"
     },
     "measure_power_reactive_in": {
       "type": "number",
@@ -510,7 +770,8 @@
       "decimals": 0,
       "getable": true,
       "setable": false,
-      "uiComponent": "sensor"
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/measure_power_reactive_in.svg"
     },
     "measure_power_reactive_out": {
       "type": "number",
@@ -525,22 +786,8 @@
       "decimals": 0,
       "getable": true,
       "setable": false,
-      "uiComponent": "sensor"
-    },
-    "measure_uptime": {
-      "type": "number",
-      "title": {
-        "en": "Uptime",
-        "nl": "Uptime"
-      },
-      "units": {
-        "en": "hours",
-        "nl": "uren"
-      },
-      "decimals": 1,
-      "getable": true,
-      "setable": false,
-      "uiComponent": "sensor"
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/measure_power_reactive_out.svg"
     }
   },
   "discovery": {

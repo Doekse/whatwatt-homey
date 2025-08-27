@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  .instructions {
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  .device-image {
+    display: block;
+    width: 450px;
+    max-width: 100%;
+    margin: 30px auto;
+    border-radius: 8px;
+  }
+
+  .test-result {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: normal;
+  }
+
+  .test-result.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+
+  .test-result.error {
+    background-color: #D81C1D;
+    color: #ffffff;
+  }
+
+  .test-result.hidden {
+    display: none;
+  }
+</style>
+</head>
+<body>
+<header id="hy-header">
+  <h1 class="homey-title homey-text-align-center">
+    <span id="hy-header-title" data-i18n="pair.repair_input.title">Repair device</span>
+    <span id="hy-header-badge" class="homey-title-badge"></span>
+  </h1>
+  <h2 id="hy-header-subtitle" class="homey-subtitle homey-text-align-center" data-i18n="pair.repair_input.subtitle">Repair a device if it is not working as expected</h2>
+</header>
+
+
+
+<p class="instructions" data-i18n="pair.repair_input.instructions">Device repair can be used to update the password used for "Device Protection" and to reinitialize the device capabilities based on what your smart meter supports. If your whatwatt Go has "Device Protection" enabled, enter the password below. If disabled, leave the field empty. The password will be tested during the repair process.</p>
+
+<div style="margin: 0 0 20px 0;">
+  <label class="homey-form-label" for="ww-password" data-i18n="pair.repair_input.password_label">Password</label>
+  <input
+    id="ww-password"
+    class="homey-form-input"
+    type="password"
+    data-i18n-placeholder="pair.repair_input.password_placeholder"
+    placeholder="Password"
+  />
+</div>
+
+<div id="test-result" class="test-result hidden"></div>
+
+<button
+  id="ww-repair"
+  class="homey-button-primary-shadow-full"
+  data-i18n="pair.repair_input.repair_button"
+>Repair Device</button>
+    <script type="application/javascript">
+        const $password = document.getElementById('ww-password');
+        const $repair = document.getElementById('ww-repair');
+        const $testResult = document.getElementById('test-result');
+
+        // Repair device functionality with password testing
+        $repair.addEventListener('click', async () => {
+            if ($repair.classList.contains('is-loading')) return;
+            $repair.classList.add('is-loading');
+
+            try {
+                const password = $password.value.trim();
+                console.log('Starting repair with password:', password ? '***' : '(empty)');
+                
+                // Send password to driver
+                await Homey.emit('password_entered', { password });
+                
+                // Start the repair process (which includes password testing)
+                const result = await Homey.emit('repair_device');
+                console.log('repair_device returned:', result);
+
+                // Only show error messages - success just closes the dialog
+                if (result && result.success === false) {
+                    // Show error message
+                    $testResult.textContent = result.message || 'Repair failed';
+                    $testResult.className = 'test-result error';
+                    $testResult.classList.remove('hidden');
+                } else {
+                    // Success - just close the dialog
+                    console.log('Repair completed successfully');
+                    await Homey.done();
+                }
+            } catch (error) {
+                console.error('Error during repair:', error);
+                $testResult.textContent = 'Error during repair';
+                $testResult.className = 'test-result error';
+                $testResult.classList.remove('hidden');
+            } finally {
+                $repair.classList.remove('is-loading');
+            }
+        });
+
+        // Focus on password input when view loads
+        $password.focus();
+    </script>
+</body>
+</html>

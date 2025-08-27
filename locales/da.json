@@ -1,0 +1,40 @@
+{
+  "pair": {
+    "password_input": {
+      "title": "Device Protection",
+      "subtitle": "Angiv en adgangskode hvis Device Protection er aktiveret",
+      "instructions": "Kontroller om din whatwatt Go har \"Device Protection\" aktiveret. Du kan gøre dette ved at kontrollere enhedsindstillingerne i web-grænsefladen. Hvis det er aktiveret, indtast adgangskoden nedenfor. Hvis det er deaktiveret, lad feltet stå tomt. Tryk derefter \"Fortsæt\" for at fortsætte med parringen",
+      "password_label": "Adgangskode",
+      "password_placeholder": "Adgangskode",
+      "continue_button": "Fortsæt",
+      "error_message": "Der opstod en fejl. Prøv igen."
+    },
+    "repair_input": {
+      "title": "Reparer enhed",
+      "subtitle": "Reparer en enhed hvis den ikke fungerer som forventet",
+      "instructions": "Enhedsreparation kan bruges til at opdatere adgangskoden til \"Device Protection\" og til at geninitialisere enhedens funktioner baseret på hvad din smartmåler understøtter. Hvis din whatwatt Go har \"Device Protection\" aktiveret, indtast adgangskoden nedenfor. Hvis det er deaktiveret, lad feltet stå tomt. Adgangskoden vil blive testet under reparationsprocessen.",
+      "password_label": "Adgangskode",
+      "password_placeholder": "Adgangskode",
+      "repair_button": "Reparer enhed"
+    }
+  },
+  "settings": {
+    "device_information": {
+      "label": "Enhedsinformation",
+      "device_id": "Enheds-ID",
+      "model": "Model",
+      "firmware": "Firmware Version"
+    },
+    "meter_information": {
+      "label": "Målerinformation",
+      "interface": "Interface",
+      "meter_id": "Måler-ID",
+      "manufacturer": "Producent",
+      "type": "Type",
+      "model": "Model",
+      "protocol": "Protokol",
+      "protocol_version": "Protokol Version",
+      "report_interval": "Rapport Interval"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "pair": {
+    "password_input": {
+      "title": "Device Protection",
+      "subtitle": "Please provide a password if device protection is enabled",
+      "instructions": "Please check if your whatwatt Go has \"Device Protection\" enabled. You can do this by checking the device settings in the web-UI. If enabled, enter the password below. If disabled, leave the field empty. Afterward, please press \"Continue\" to proceed with the pairing",
+      "password_label": "Password",
+      "password_placeholder": "Password",
+      "continue_button": "Continue",
+      "error_message": "An error occurred. Please try again."
+    },
+    "repair_input": {
+      "title": "Repair device",
+      "subtitle": "Repair a device if it is not working as expected",
+      "instructions": "Device repair can be used to update the password used for \"Device Protection\" and to reinitialize the device capabilities based on what your smart meter supports. If your whatwatt Go has \"Device Protection\" enabled, enter the password below. If disabled, leave the field empty. The password will be tested during the repair process.",
+      "password_label": "Password",
+      "password_placeholder": "Password",
+      "repair_button": "Repair Device"
+    }
+  },
+  "settings": {
+    "device_information": {
+      "label": "Device Information",
+      "device_id": "Device ID",
+      "model": "Model",
+      "firmware": "Firmware Version"
+    },
+    "meter_information": {
+      "label": "Meter Information",
+      "interface": "Interface",
+      "meter_id": "Meter ID",
+      "manufacturer": "Manufacturer",
+      "type": "Type",
+      "model": "Model",
+      "protocol": "Protocol",
+      "protocol_version": "Protocol Version",
+      "report_interval": "Report Interval"
+    }
+  }
+}

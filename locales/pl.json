@@ -1,0 +1,40 @@
+{
+  "pair": {
+    "password_input": {
+      "title": "Device Protection",
+      "subtitle": "Podaj hasło, jeśli Device Protection jest włączona",
+      "instructions": "Sprawdź, czy Twój whatwatt Go ma włączoną \"Device Protection\". Możesz to zrobić, sprawdzając ustawienia urządzenia w interfejsie web. Jeśli jest włączona, wprowadź hasło poniżej. Jeśli jest wyłączona, pozostaw pole puste. Następnie naciśnij \"Kontynuuj\", aby przejść do parowania",
+      "password_label": "Hasło",
+      "password_placeholder": "Hasło",
+      "continue_button": "Kontynuuj",
+      "error_message": "Wystąpił błąd. Spróbuj ponownie."
+    },
+    "repair_input": {
+      "title": "Napraw urządzenie",
+      "subtitle": "Napraw urządzenie, jeśli nie działa zgodnie z oczekiwaniami",
+      "instructions": "Naprawa urządzenia może być używana do aktualizacji hasła używanego dla \"Device Protection\" i do ponownej inicjalizacji możliwości urządzenia na podstawie tego, co obsługuje Twój inteligentny licznik. Jeśli Twój whatwatt Go ma włączoną \"Device Protection\", wprowadź hasło poniżej. Jeśli jest wyłączona, pozostaw pole puste. Hasło zostanie przetestowane podczas procesu naprawy.",
+      "password_label": "Hasło",
+      "password_placeholder": "Hasło",
+      "repair_button": "Napraw urządzenie"
+    }
+  },
+  "settings": {
+    "device_information": {
+      "label": "Informacje o urządzeniu",
+      "device_id": "ID urządzenia",
+      "model": "Model",
+      "firmware": "Wersja oprogramowania"
+    },
+    "meter_information": {
+      "label": "Informacje o liczniku",
+      "interface": "Interfejs",
+      "meter_id": "ID licznika",
+      "manufacturer": "Producent",
+      "type": "Typ",
+      "model": "Model",
+      "protocol": "Protokół",
+      "protocol_version": "Wersja protokołu",
+      "report_interval": "Interwał raportowania"
+    }
+  }
+}

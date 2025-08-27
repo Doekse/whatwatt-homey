@@ -1,0 +1,40 @@
+{
+  "pair": {
+    "password_input": {
+      "title": "Device Protection",
+      "subtitle": "Fornire una password se Device Protection è abilitata",
+      "instructions": "Controllare se il whatwatt Go ha \"Device Protection\" abilitata. È possibile farlo controllando le impostazioni del dispositivo nell'interfaccia web. Se abilitata, inserire la password qui sotto. Se disabilitata, lasciare il campo vuoto. Successivamente, premere \"Continua\" per procedere con l'associazione",
+      "password_label": "Password",
+      "password_placeholder": "Password",
+      "continue_button": "Continua",
+      "error_message": "Si è verificato un errore. Riprova."
+    },
+    "repair_input": {
+      "title": "Ripara dispositivo",
+      "subtitle": "Ripara un dispositivo se non funziona come previsto",
+      "instructions": "La riparazione del dispositivo può essere utilizzata per aggiornare la password utilizzata per \"Device Protection\" e per reinizializzare le capacità del dispositivo in base a ciò che supporta il tuo contatore intelligente. Se il tuo whatwatt Go ha \"Device Protection\" abilitata, inserisci la password qui sotto. Se disabilitata, lascia il campo vuoto. La password verrà testata durante il processo di riparazione.",
+      "password_label": "Password",
+      "password_placeholder": "Password",
+      "repair_button": "Ripara dispositivo"
+    }
+  },
+  "settings": {
+    "device_information": {
+      "label": "Informazioni dispositivo",
+      "device_id": "ID dispositivo",
+      "model": "Modello",
+      "firmware": "Versione firmware"
+    },
+    "meter_information": {
+      "label": "Informazioni contatore",
+      "interface": "Interfaccia",
+      "meter_id": "ID contatore",
+      "manufacturer": "Produttore",
+      "type": "Tipo",
+      "model": "Modello",
+      "protocol": "Protocollo",
+      "protocol_version": "Versione protocollo",
+      "report_interval": "Intervallo di rapporto"
+    }
+  }
+}

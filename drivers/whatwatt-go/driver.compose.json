@@ -418,6 +418,9 @@
   "discovery": "whatwatt-go-mdns",
   "pair": [
     {
+      "id": "password_input"
+    },
+    {
       "id": "list_whatwatt_devices",
       "template": "list_devices",
       "navigation": {
@@ -427,6 +430,11 @@
     {
       "id": "add_whatwatt_devices",
       "template": "add_devices"
+    }
+  ],
+  "repair": [
+    {
+      "id": "repair_input"
     }
   ],
   "images": {

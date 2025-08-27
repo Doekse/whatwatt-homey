@@ -1,0 +1,40 @@
+{
+  "pair": {
+    "password_input": {
+      "title": "Device Protection",
+      "subtitle": "Veuillez fournir un mot de passe si Device Protection est activée",
+      "instructions": "Veuillez vérifier si votre whatwatt Go a \"Device Protection\" activée. Vous pouvez le faire en vérifiant les paramètres de l'appareil dans l'interface web. Si elle est activée, saisissez le mot de passe ci-dessous. Si elle est désactivée, laissez le champ vide. Ensuite, appuyez sur \"Continuer\" pour procéder au jumelage",
+      "password_label": "Mot de passe",
+      "password_placeholder": "Mot de passe",
+      "continue_button": "Continuer",
+      "error_message": "Une erreur s'est produite. Veuillez réessayer."
+    },
+    "repair_input": {
+      "title": "Réparer l'appareil",
+      "subtitle": "Réparer un appareil s'il ne fonctionne pas comme prévu",
+      "instructions": "La réparation d'appareil peut être utilisée pour mettre à jour le mot de passe utilisé pour \"Device Protection\" et pour réinitialiser les capacités de l'appareil en fonction de ce que votre compteur intelligent prend en charge. Si votre whatwatt Go a \"Device Protection\" activée, saisissez le mot de passe ci-dessous. Si elle est désactivée, laissez le champ vide. Le mot de passe sera testé pendant le processus de réparation.",
+      "password_label": "Mot de passe",
+      "password_placeholder": "Mot de passe",
+      "repair_button": "Réparer l'appareil"
+    }
+  },
+  "settings": {
+    "device_information": {
+      "label": "Informations sur l'appareil",
+      "device_id": "ID de l'appareil",
+      "model": "Modèle",
+      "firmware": "Version du firmware"
+    },
+    "meter_information": {
+      "label": "Informations du compteur",
+      "interface": "Interface",
+      "meter_id": "ID du compteur",
+      "manufacturer": "Fabricant",
+      "type": "Type",
+      "model": "Modèle",
+      "protocol": "Protocole",
+      "protocol_version": "Version du protocole",
+      "report_interval": "Intervalle de rapport"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "pair": {
+    "password_input": {
+      "title": "Device Protection",
+      "subtitle": "Geef een wachtwoord op als Device Protection is ingeschakeld",
+      "instructions": "Controleer of je whatwatt Go \"Device Protection\" heeft ingeschakeld. Je kunt dit doen door de apparaatinstellingen in de web-UI te controleren. Als het is ingeschakeld, voer dan het wachtwoord hieronder in. Als het is uitgeschakeld, laat het veld leeg. Druk vervolgens op \"Doorgaan\" om door te gaan met het koppelen",
+      "password_label": "Wachtwoord",
+      "password_placeholder": "Wachtwoord",
+      "continue_button": "Doorgaan",
+      "error_message": "Er is een fout opgetreden. Probeer het opnieuw."
+    },
+    "repair_input": {
+      "title": "Apparaat repareren",
+      "subtitle": "Repareer een apparaat als het niet werkt zoals verwacht",
+      "instructions": "Apparaatreparatie kan worden gebruikt om het wachtwoord dat wordt gebruikt voor \"Device Protection\" bij te werken en om de apparaatfuncties opnieuw te initialiseren op basis van wat je slimme meter ondersteunt. Als je whatwatt Go \"Device Protection\" heeft ingeschakeld, voer dan het wachtwoord hieronder in. Als het is uitgeschakeld, laat het veld leeg. Het wachtwoord wordt getest tijdens het reparatieproces.",
+      "password_label": "Wachtwoord",
+      "password_placeholder": "Wachtwoord",
+      "repair_button": "Apparaat repareren"
+    }
+  },
+  "settings": {
+    "device_information": {
+      "label": "Apparaat Informatie",
+      "device_id": "Apparaat ID",
+      "model": "Model",
+      "firmware": "Firmware Versie"
+    },
+    "meter_information": {
+      "label": "Meter Informatie",
+      "interface": "Interface",
+      "meter_id": "Meter ID",
+      "manufacturer": "Fabrikant",
+      "type": "Type",
+      "model": "Model",
+      "protocol": "Protocol",
+      "protocol_version": "Protocol Versie",
+      "report_interval": "Rapportage Interval"
+    }
+  }
+}
