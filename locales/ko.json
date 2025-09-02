@@ -1,14 +1,5 @@
 {
   "pair": {
-    "password_input": {
-      "title": "Device Protection",
-      "subtitle": "Device Protection이 활성화된 경우 비밀번호를 제공하세요",
-      "instructions": "whatwatt Go에 \"Device Protection\"이 활성화되어 있는지 확인하세요. 웹 UI에서 기기 설정을 확인하여 이를 수행할 수 있습니다. 활성화된 경우 아래에 비밀번호를 입력하세요. 비활성화된 경우 필드를 비워두세요. 그런 다음 \"계속\"을 눌러 페어링을 진행하세요",
-      "password_label": "비밀번호",
-      "password_placeholder": "비밀번호",
-      "continue_button": "계속",
-      "error_message": "오류가 발생했습니다. 다시 시도하세요."
-    },
     "repair_input": {
       "title": "기기 수리",
       "subtitle": "기기가 예상대로 작동하지 않는 경우 기기를 수리하세요",
@@ -16,6 +7,13 @@
       "password_label": "비밀번호",
       "password_placeholder": "비밀번호",
       "repair_button": "기기 수리"
+    },
+    "pair_password": {
+      "subtitle": "whatwatt Go 기기는 연결을 위해 인증이 필요합니다",
+      "instructions": "whatwatt Go 기기에 \"Device Protection\"이 활성화되어 있어 Homey에 연결하기 전에 비밀번호가 필요합니다. 기기의 웹 인터페이스에 설정한 비밀번호를 입력하세요.",
+      "password_label": "비밀번호",
+      "password_placeholder": "비밀번호",
+      "test_button": "계속"
     }
   },
   "settings": {

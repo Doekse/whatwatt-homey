@@ -1,14 +1,5 @@
 {
   "pair": {
-    "password_input": {
-      "title": "Device Protection",
-      "subtitle": "Angiv en adgangskode hvis Device Protection er aktiveret",
-      "instructions": "Kontroller om din whatwatt Go har \"Device Protection\" aktiveret. Du kan gøre dette ved at kontrollere enhedsindstillingerne i web-grænsefladen. Hvis det er aktiveret, indtast adgangskoden nedenfor. Hvis det er deaktiveret, lad feltet stå tomt. Tryk derefter \"Fortsæt\" for at fortsætte med parringen",
-      "password_label": "Adgangskode",
-      "password_placeholder": "Adgangskode",
-      "continue_button": "Fortsæt",
-      "error_message": "Der opstod en fejl. Prøv igen."
-    },
     "repair_input": {
       "title": "Reparer enhed",
       "subtitle": "Reparer en enhed hvis den ikke fungerer som forventet",
@@ -16,6 +7,13 @@
       "password_label": "Adgangskode",
       "password_placeholder": "Adgangskode",
       "repair_button": "Reparer enhed"
+    },
+    "pair_password": {
+      "subtitle": "Din whatwatt Go enhed kræver godkendelse for at forbinde",
+      "instructions": "Din whatwatt Go enhed har \"Device Protection\" aktiveret og har brug for en adgangskode, før den kan forbindes til Homey. Indtast venligst adgangskoden, du har indstillet i enhedens web-interface.",
+      "password_label": "Adgangskode",
+      "password_placeholder": "Adgangskode",
+      "test_button": "Fortsæt"
     }
   },
   "settings": {

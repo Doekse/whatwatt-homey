@@ -5,20 +5,16 @@
   "class": "sensor",
   "capabilities": [
     "measure_power",
-    "measure_power.export",
     "measure_power.phase1",
     "measure_power.phase2", 
     "measure_power.phase3",
-    "measure_power.phase1_export",
-    "measure_power.phase2_export",
-    "measure_power.phase3_export",
-    "measure_voltage.phase1",
+    "measure_voltage",
     "measure_voltage.phase2",
     "measure_voltage.phase3",
-    "measure_current.phase1",
+    "measure_current",
     "measure_current.phase2",
     "measure_current.phase3",
-    "meter_power.imported",
+    "meter_power",
     "meter_power.exported",
     "meter_power.imported_tariff1",
     "meter_power.imported_tariff2",
@@ -30,40 +26,24 @@
   ],
   "energy": {
     "cumulative": true,
-    "cumulativeImportedCapability": "meter_power.imported",
+    "cumulativeImportedCapability": "meter_power",
     "cumulativeExportedCapability": "meter_power.exported"
   },
   "capabilitiesOptions": {
     "measure_power": {
       "title": {
-        "en": "Power Import",
-        "nl": "Vermogen Import",
-        "de": "Leistung Import",
-        "fr": "Puissance Import",
-        "it": "Potenza Import",
-        "sv": "Effekt Import",
-        "no": "Effekt Import",
-        "es": "Potencia Import",
-        "da": "Effekt Import",
-        "ru": "Мощность Импорт",
-        "pl": "Moc Import",
-        "ko": "전력 수입"
-      }
-    },
-    "measure_power.export": {
-      "title": {
-        "en": "Power Export",
-        "nl": "Vermogen Export",
-        "de": "Leistung Export",
-        "fr": "Puissance Export",
-        "it": "Potenza Export",
-        "sv": "Effekt Export",
-        "no": "Effekt Export",
-        "es": "Potencia Export",
-        "da": "Effekt Export",
-        "ru": "Мощность Экспорт",
-        "pl": "Moc Export",
-        "ko": "전력 수출"
+        "en": "Power",
+        "nl": "Vermogen",
+        "de": "Leistung",
+        "fr": "Puissance",
+        "it": "Potenza",
+        "sv": "Effekt",
+        "no": "Effekt",
+        "es": "Potencia",
+        "da": "Effekt",
+        "ru": "Мощность",
+        "pl": "Moc",
+        "ko": "전력"
       }
     },
     "measure_power.phase1": {
@@ -114,55 +94,7 @@
         "ko": "전력 (상 3)"
       }
     },
-    "measure_power.phase1_export": {
-      "title": {
-        "en": "Power Export (Phase 1)",
-        "nl": "Vermogen Export (Fase 1)",
-        "de": "Leistung Export (Phase 1)",
-        "fr": "Puissance Export (Phase 1)",
-        "it": "Potenza Export (Fase 1)",
-        "sv": "Effekt Export (Fas 1)",
-        "no": "Effekt Export (Fase 1)",
-        "es": "Potencia Export (Fase 1)",
-        "da": "Effekt Export (Fase 1)",
-        "ru": "Мощность Экспорт (Фаза 1)",
-        "pl": "Moc Export (Faza 1)",
-        "ko": "전력 수출 (상 1)"
-      }
-    },
-    "measure_power.phase2_export": {
-      "title": {
-        "en": "Power Export (Phase 2)",
-        "nl": "Vermogen Export (Fase 2)",
-        "de": "Leistung Export (Phase 2)",
-        "fr": "Puissance Export (Phase 2)",
-        "it": "Potenza Export (Fase 2)",
-        "sv": "Effekt Export (Fas 2)",
-        "no": "Effekt Export (Fase 2)",
-        "es": "Potencia Export (Fase 2)",
-        "da": "Effekt Export (Fase 2)",
-        "ru": "Мощность Экспорт (Фаза 2)",
-        "pl": "Moc Export (Faza 2)",
-        "ko": "전력 수출 (상 2)"
-      }
-    },
-    "measure_power.phase3_export": {
-      "title": {
-        "en": "Power Export (Phase 3)",
-        "nl": "Vermogen Export (Fase 3)",
-        "de": "Leistung Export (Phase 3)",
-        "fr": "Puissance Export (Phase 3)",
-        "it": "Potenza Export (Fase 3)",
-        "sv": "Effekt Export (Fas 3)",
-        "no": "Effekt Export (Fase 3)",
-        "es": "Potencia Export (Fase 3)",
-        "da": "Effekt Export (Fase 3)",
-        "ru": "Мощность Экспорт (Фаза 3)",
-        "pl": "Moc Export (Faza 3)",
-        "ko": "전력 수출 (상 3)"
-      }
-    },
-    "measure_voltage.phase1": {
+    "measure_voltage": {
       "title": {
         "en": "Voltage (Phase 1)",
         "nl": "Spanning (Fase 1)",
@@ -210,7 +142,7 @@
         "ko": "전압 (상 3)"
       }
     },
-    "measure_current.phase1": {
+    "measure_current": {
       "title": {
         "en": "Current (Phase 1)",
         "nl": "Stroom (Fase 1)",
@@ -258,7 +190,7 @@
         "ko": "전류 (상 3)"
       }
     },
-    "meter_power.imported": {
+    "meter_power": {
       "title": {
         "en": "Total Energy Imported",
         "nl": "Totaal Energie Geïmporteerd",
@@ -418,14 +350,18 @@
   "discovery": "whatwatt-go-mdns",
   "pair": [
     {
-      "id": "password_input"
-    },
-    {
       "id": "list_whatwatt_devices",
       "template": "list_devices",
       "navigation": {
-        "next": "add_whatwatt_devices"
+        "next": "loading"
       }
+    },
+    {
+      "id": "loading",
+      "template": "loading"
+    },
+    {
+      "id": "pair_password"
     },
     {
       "id": "add_whatwatt_devices",

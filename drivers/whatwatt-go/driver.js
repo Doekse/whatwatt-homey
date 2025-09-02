@@ -2,11 +2,14 @@
 
 const Homey = require('homey');
 
+/**
+ * Driver for whatwatt Go devices.
+ * Handles device discovery, pairing, and repair operations with password authentication.
+ */
 module.exports = class whatwattGoDriver extends Homey.Driver {
 
   /**
-   * Initializes the driver when Homey starts.
-   * Sets up the driver instance.
+   * Sets up the driver instance when Homey starts.
    */
   async onInit() {
     this.log('whatwatt Go Driver has been initialized');
@@ -14,7 +17,7 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
 
   /**
    * Discovers available whatwatt Go devices for pairing.
-   * Converts mDNS discovery results into device objects.
+   * Converts mDNS discovery results into device objects that Homey can pair with.
    * 
    * @returns {Array} Array of device objects available for pairing
    */
@@ -23,7 +26,7 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
     const discoveryResults = discoveryStrategy.getDiscoveryResults();
 
     const devices = Object.values(discoveryResults).map(discoveryResult => {
-      // Clean device name by removing "WebUI" suffix and using last 6 chars of ID as fallback
+      // Remove "WebUI" suffix from device names and use last 6 chars of ID as fallback
       const deviceName = (discoveryResult.name || `whatwatt Go ${discoveryResult.id.slice(-6)}`).replace(/\s+WebUI\s*$/i, '');
       
       return {
@@ -46,40 +49,115 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
   }
 
   /**
-   * Manages the device pairing process with password authentication.
-   * Sets up event handlers for the custom password input view.
+   * Manages the device pairing process with conditional password authentication.
+   * Tests device connectivity to determine if password is required, then guides user through appropriate flow.
    */
   async onPair(session) {
+    let selectedDevice = null;
     let cachedPassword = '';
 
-    // Cache password from custom input view
+    // Cache password for use across multiple pairing steps
     session.setHandler('password_entered', async ({ password }) => {
       cachedPassword = (password || '').trim();
       this.log('Password received via password_entered handler:', cachedPassword ? '***' : '(none)');
       return true;
     });
 
-    // Inject cached password into device store
+    // Validate password by testing device connection
+    session.setHandler('test_password', async () => {
+      if (!selectedDevice) {
+        return { success: false, message: 'No device selected' };
+      }
+
+      try {
+        const whatwattAPI = require('../../lib/whatwattapi');
+        const connectionSuccess = await whatwattAPI.testDeviceConnection(
+          { host: selectedDevice.store.address, port: selectedDevice.store.port },
+          cachedPassword
+        );
+        
+        if (!connectionSuccess) {
+          return { success: false, message: 'Password is incorrect or connection failed' };
+        }
+        
+        return { success: true };
+      } catch (error) {
+        this.log('Password test error during pairing:', error.message);
+        return { success: false, message: `Connection test failed: ${error.message}` };
+      }
+    });
+
+    // Provide device list to pairing interface
     session.setHandler('list_devices', async () => {
       const devices = await this.onPairListDevices();
-      
-      this.log(`Password from pairing: ${cachedPassword ? '***' : '(none)'}`);
-      
-      // Add the password to each device's store
-      devices.forEach(device => {
-        if (cachedPassword) {
-          device.store.password = cachedPassword;
-          this.log(`Added password to device ${device.name} (${device.data.id})`);
-        }
-      });
-      
       return devices;
+    });
+
+    // Handle view navigation and determine authentication flow
+    session.setHandler('showView', async (viewId) => {
+      if (viewId === 'loading') {
+        // Get the selected device from the session (Homey handles selection internally)
+        try {
+          const devices = await this.onPairListDevices();
+          if (devices.length > 0) {
+            selectedDevice = devices[0];
+            this.log(`Using selected device: ${selectedDevice.name} (${selectedDevice.data.id})`);
+          } else {
+            this.log('No devices available, cannot proceed');
+            return;
+          }
+        } catch (error) {
+          this.log('Error getting devices from session:', error.message);
+          return;
+        }
+
+        try {
+          this.log('Testing connection during pairing for device:', selectedDevice.name);
+          
+          // Test connection without password to determine if authentication is required
+          const whatwattAPI = require('../../lib/whatwattapi');
+          const connectionSuccess = await whatwattAPI.testDeviceConnection(
+            { host: selectedDevice.store.address, port: selectedDevice.store.port },
+            '',
+            5000
+          );
+          
+          if (connectionSuccess) {
+            // No password needed, proceed directly to device creation
+            this.log('Device does not require password, proceeding to device creation');
+            await session.showView('add_whatwatt_devices');
+          } else {
+            // Password required, show password test view
+            this.log('Device requires password, showing password test view');
+            await session.showView('pair_password');
+          }
+        } catch (error) {
+          this.log('Connection test failed, assuming password is required:', error.message);
+          // If connection fails, assume password is required
+          await session.showView('pair_password');
+        }
+      }
+      
+      if (viewId === 'pair_password') {
+        // Always show password test view when navigating to it
+        return;
+      }
+      
+      if (viewId === 'add_whatwatt_devices') {
+        // Store the tested password in ManagerSettings for the device
+        if (selectedDevice && cachedPassword) {
+          // Store password in ManagerSettings using device ID as key
+          const passwordKey = `password_${selectedDevice.data.id}`;
+          await this.homey.settings.set(passwordKey, cachedPassword);
+          this.log(`Added tested password to ManagerSettings for device ${selectedDevice.name} (${selectedDevice.data.id})`);
+        }
+      }
     });
   }
 
   /**
    * Manages device repair process including password testing and capability reconfiguration.
-   * Allows users to update credentials without re-pairing.
+   * Allows users to update credentials and refresh device state without re-pairing.
    */
   async onRepair(session, device) {
     let cachedPassword = '';
@@ -103,17 +181,11 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
         this.log('Testing password during repair:', cachedPassword ? '***' : '(none)');
         
         const whatwattAPI = require('../../lib/whatwattapi');
-        const api = new whatwattAPI({
-          host: store.address,
-          port: store.port || 80,
-          https: settings.https || false,
-          username: settings.username,
-          password: cachedPassword,
-          timeout: settings.timeout || 10000,
-          device: device,
-        });
-
-        const connectionSuccess = await api.testConnection();
+        const connectionSuccess = await whatwattAPI.testDeviceConnection(
+          { host: store.address, port: store.port },
+          cachedPassword,
+          settings.timeout || 10000
+        );
         
         if (!connectionSuccess) {
           this.log('Password test failed during repair');
@@ -129,14 +201,15 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
           device.eventStream = null;
         }
 
-        // Update device password in store
+        // Update device password in ManagerSettings
         if (cachedPassword !== undefined) {
+          const passwordKey = `password_${device.getData().id}`;
           if (cachedPassword) {
-            await device.setStoreValue('password', cachedPassword);
-            this.log('Updated device password during repair');
+            await this.homey.settings.set(passwordKey, cachedPassword);
+            this.log('Updated device password in ManagerSettings during repair');
           } else {
-            await device.unsetStoreValue('password');
-            this.log('Removed device password during repair');
+            await this.homey.settings.unset(passwordKey);
+            this.log('Removed device password from ManagerSettings during repair');
           }
         }
 

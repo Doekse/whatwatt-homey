@@ -1,14 +1,5 @@
 {
   "pair": {
-    "password_input": {
-      "title": "Device Protection",
-      "subtitle": "Geef een wachtwoord op als Device Protection is ingeschakeld",
-      "instructions": "Controleer of je whatwatt Go \"Device Protection\" heeft ingeschakeld. Je kunt dit doen door de apparaatinstellingen in de web-UI te controleren. Als het is ingeschakeld, voer dan het wachtwoord hieronder in. Als het is uitgeschakeld, laat het veld leeg. Druk vervolgens op \"Doorgaan\" om door te gaan met het koppelen",
-      "password_label": "Wachtwoord",
-      "password_placeholder": "Wachtwoord",
-      "continue_button": "Doorgaan",
-      "error_message": "Er is een fout opgetreden. Probeer het opnieuw."
-    },
     "repair_input": {
       "title": "Apparaat repareren",
       "subtitle": "Repareer een apparaat als het niet werkt zoals verwacht",
@@ -16,6 +7,13 @@
       "password_label": "Wachtwoord",
       "password_placeholder": "Wachtwoord",
       "repair_button": "Apparaat repareren"
+    },
+    "pair_password": {
+      "subtitle": "Je whatwatt Go apparaat vereist authenticatie om te verbinden",
+      "instructions": "Je whatwatt Go apparaat heeft \"Device Protection\" ingeschakeld en heeft een wachtwoord nodig voordat het kan worden verbonden met Homey. Voer het wachtwoord in dat je hebt ingesteld in de web-interface van het apparaat.",
+      "password_label": "Wachtwoord",
+      "password_placeholder": "Wachtwoord",
+      "test_button": "Doorgaan"
     }
   },
   "settings": {

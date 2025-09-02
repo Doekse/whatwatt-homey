@@ -1,14 +1,5 @@
 {
   "pair": {
-    "password_input": {
-      "title": "Device Protection",
-      "subtitle": "Veuillez fournir un mot de passe si Device Protection est activée",
-      "instructions": "Veuillez vérifier si votre whatwatt Go a \"Device Protection\" activée. Vous pouvez le faire en vérifiant les paramètres de l'appareil dans l'interface web. Si elle est activée, saisissez le mot de passe ci-dessous. Si elle est désactivée, laissez le champ vide. Ensuite, appuyez sur \"Continuer\" pour procéder au jumelage",
-      "password_label": "Mot de passe",
-      "password_placeholder": "Mot de passe",
-      "continue_button": "Continuer",
-      "error_message": "Une erreur s'est produite. Veuillez réessayer."
-    },
     "repair_input": {
       "title": "Réparer l'appareil",
       "subtitle": "Réparer un appareil s'il ne fonctionne pas comme prévu",
@@ -16,6 +7,13 @@
       "password_label": "Mot de passe",
       "password_placeholder": "Mot de passe",
       "repair_button": "Réparer l'appareil"
+    },
+    "pair_password": {
+      "subtitle": "Votre appareil whatwatt Go nécessite une authentification pour se connecter",
+      "instructions": "Votre appareil whatwatt Go a \"Device Protection\" activée et nécessite un mot de passe avant de pouvoir se connecter à Homey. Veuillez saisir le mot de passe que vous avez défini dans l'interface web de l'appareil.",
+      "password_label": "Mot de passe",
+      "password_placeholder": "Mot de passe",
+      "test_button": "Continuer"
     }
   },
   "settings": {
