@@ -1,6 +1,6 @@
 {
   "id": "ch.whatwatt",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "compatibility": ">=12.4.0",
   "sdk": 3,
   "brandColor": "#000000",
@@ -37,5 +37,6 @@
     ]
   },
   "source": "https://github.com/Doekse/whatwatt-homey",
-  "support": "mailto:abe.haverkamp+whatwatt@homey.app"
+  "support": "mailto:abe.haverkamp+whatwatt@homey.app",
+  "homeyCommunityTopicId": 143334
 }
