@@ -2,13 +2,20 @@
 
 const Homey = require('homey');
 
-module.exports = class MyApp extends Homey.App {
+module.exports = class whatwattApp extends Homey.App {
 
   /**
    * onInit is called when the app is initialized.
    */
   async onInit() {
-    this.log('MyApp has been initialized');
+    this.log('whatwatt App has been initialized');
+  }
+
+  /**
+   * onUninit is called when the app is destroyed.
+   */
+  async onUninit() {
+    this.log('whatwatt App has been destroyed');
   }
 
 };

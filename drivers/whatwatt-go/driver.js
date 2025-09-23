@@ -16,6 +16,13 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
   }
 
   /**
+   * Cleanup when the driver is destroyed.
+   */
+  async onUninit() {
+    this.log('whatwatt Go Driver has been uninitialized');
+  }
+
+  /**
    * Discovers available whatwatt Go devices for pairing.
    * Converts mDNS discovery results into device objects that Homey can pair with.
    * 

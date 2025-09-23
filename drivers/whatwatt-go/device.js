@@ -204,6 +204,21 @@ module.exports = class whatwattGoDevice extends Homey.Device {
     }
   }
 
+  /**
+   * Cleanup when the device is uninitialized.
+   */
+  async onUninit() {
+    this.log('whatwatt Go Device has been uninitialized');
+    // Prevent further async updates
+    this._isDeleted = true;
+    
+    // Stop SSE stream and release reference
+    if (this.eventStream) {
+      this.eventStream.stop();
+      this.eventStream = null;
+    }
+  }
+
   // ============================================================================
   // INITIALIZATION METHODS
   // ============================================================================
@@ -255,6 +270,7 @@ module.exports = class whatwattGoDevice extends Homey.Device {
     const password = this.homey.settings.get(passwordKey);
     
     this.eventStream = new whatwattEventStream({
+      homey: this.homey,
       host: store.address,
       port: store.port || 80,
       https: settings.https || false,
@@ -373,37 +389,37 @@ module.exports = class whatwattGoDevice extends Homey.Device {
       const powerData = calculatePower(data);
       
       // Net power (import positive, export negative)
-      await updateCapability(this, 'measure_power', convertPower(powerData.total));
+      await updateCapability(this, 'measure_power', convertPower(powerData.total)).catch(this.error);
       
       // Net power per phase
-      await updateCapability(this, 'measure_power.phase1', convertPower(powerData.phase1));
-      await updateCapability(this, 'measure_power.phase2', convertPower(powerData.phase2));
-      await updateCapability(this, 'measure_power.phase3', convertPower(powerData.phase3));
+      await updateCapability(this, 'measure_power.phase1', convertPower(powerData.phase1)).catch(this.error);
+      await updateCapability(this, 'measure_power.phase2', convertPower(powerData.phase2)).catch(this.error);
+      await updateCapability(this, 'measure_power.phase3', convertPower(powerData.phase3)).catch(this.error);
       
       // Phase voltages
-      await updateCapability(this, 'measure_voltage', data.V_P1);
-      await updateCapability(this, 'measure_voltage.phase2', data.V_P2);
-      await updateCapability(this, 'measure_voltage.phase3', data.V_P3);
+      await updateCapability(this, 'measure_voltage', data.V_P1).catch(this.error);
+      await updateCapability(this, 'measure_voltage.phase2', data.V_P2).catch(this.error);
+      await updateCapability(this, 'measure_voltage.phase3', data.V_P3).catch(this.error);
       
       // Phase currents
-      await updateCapability(this, 'measure_current', data.I_P1);
-      await updateCapability(this, 'measure_current.phase2', data.I_P2);
-      await updateCapability(this, 'measure_current.phase3', data.I_P3);
+      await updateCapability(this, 'measure_current', data.I_P1).catch(this.error);
+      await updateCapability(this, 'measure_current.phase2', data.I_P2).catch(this.error);
+      await updateCapability(this, 'measure_current.phase3', data.I_P3).catch(this.error);
       
       // Cumulative energy counters (used by Homey Energy)
-      await updateCapability(this, 'meter_power', data.E_In);
-      await updateCapability(this, 'meter_power.exported', data.E_Out);
+      await updateCapability(this, 'meter_power', data.E_In).catch(this.error);
+      await updateCapability(this, 'meter_power.exported', data.E_Out).catch(this.error);
       
       // Tariff-specific energy counters
-      await updateCapability(this, 'meter_power.imported_tariff1', data.E_In_T1);
-      await updateCapability(this, 'meter_power.imported_tariff2', data.E_In_T2);
-      await updateCapability(this, 'meter_power.exported_tariff1', data.E_Out_T1);
-      await updateCapability(this, 'meter_power.exported_tariff2', data.E_Out_T2);
+      await updateCapability(this, 'meter_power.imported_tariff1', data.E_In_T1).catch(this.error);
+      await updateCapability(this, 'meter_power.imported_tariff2', data.E_In_T2).catch(this.error);
+      await updateCapability(this, 'meter_power.exported_tariff1', data.E_Out_T1).catch(this.error);
+      await updateCapability(this, 'meter_power.exported_tariff2', data.E_Out_T2).catch(this.error);
       
       // Power quality metrics: reactive power and power factor
-      await updateCapability(this, 'measure_power_reactive_in', convertPower(data.rP_In));
-      await updateCapability(this, 'measure_power_reactive_out', convertPower(data.rP_Out));
-      await updateCapability(this, 'measure_power_factor', data.PF);
+      await updateCapability(this, 'measure_power_reactive_in', convertPower(data.rP_In)).catch(this.error);
+      await updateCapability(this, 'measure_power_reactive_out', convertPower(data.rP_Out)).catch(this.error);
+      await updateCapability(this, 'measure_power_factor', data.PF).catch(this.error);
       
     } catch (error) {
       this.error('Error handling live data:', error.message);
