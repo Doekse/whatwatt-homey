@@ -10,5 +10,8 @@
   },
   "0.2.2": {
     "en": "Added Homey Forum topic ID"
+  },
+  "0.2.3": {
+    "en": "Added reconnection mechanism to eventstream"
   }
 }

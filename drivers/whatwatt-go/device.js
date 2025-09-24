@@ -276,6 +276,7 @@ module.exports = class whatwattGoDevice extends Homey.Device {
       https: settings.https || false,
       username: settings.username,
       password: password,
+      heartbeatTimeout: 300000,
       logger: (message) => this.log(`[EventStream] ${message}`),
       onData: (data) => this._handleLiveData(data),
       onConnect: () => this._onStreamConnect(),
