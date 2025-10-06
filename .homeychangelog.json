@@ -13,5 +13,11 @@
   },
   "0.2.3": {
     "en": "Added reconnection mechanism to eventstream"
+  },
+  "0.2.4": {
+    "en": "Added reconnection mechanism for when device IP address changes"
+  },
+  "0.2.5": {
+    "en": "Improved code structure and documentation"
   }
 }

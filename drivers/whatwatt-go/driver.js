@@ -4,27 +4,51 @@ const Homey = require('homey');
 
 /**
  * Driver for whatwatt Go devices.
- * Handles device discovery, pairing, and repair operations with password authentication.
+ * Manages device lifecycle including discovery, pairing with conditional authentication, and repair operations.
  */
 module.exports = class whatwattGoDriver extends Homey.Driver {
 
   /**
-   * Sets up the driver instance when Homey starts.
+   * Initializes the driver when Homey starts up.
    */
   async onInit() {
     this.log('whatwatt Go Driver has been initialized');
   }
 
   /**
-   * Cleanup when the driver is destroyed.
+   * Performs cleanup when the driver is destroyed.
    */
   async onUninit() {
     this.log('whatwatt Go Driver has been uninitialized');
   }
 
   /**
+   * Updates device store values with new connection information.
+   * Enables repair process to persist IP address changes without requiring re-pairing.
+   * 
+   * @param {Homey.Device} device - The device to update
+   * @param {Object} storeData - The store data to update
+   */
+  async updateDeviceStore(device, storeData) {
+    try {
+      const currentStore = device.getStore();
+      const updatedStore = { ...currentStore, ...storeData };
+      
+      await device.setStoreValue('address', updatedStore.address);
+      if (updatedStore.port) {
+        await device.setStoreValue('port', updatedStore.port);
+      }
+      
+      this.log(`Updated device store for ${device.getName()}:`, updatedStore);
+    } catch (error) {
+      this.error('Failed to update device store:', error.message);
+      throw error;
+    }
+  }
+
+  /**
    * Discovers available whatwatt Go devices for pairing.
-   * Converts mDNS discovery results into device objects that Homey can pair with.
+   * Transforms mDNS discovery results into Homey-compatible device objects for the pairing interface.
    * 
    * @returns {Array} Array of device objects available for pairing
    */
@@ -33,7 +57,7 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
     const discoveryResults = discoveryStrategy.getDiscoveryResults();
 
     const devices = Object.values(discoveryResults).map(discoveryResult => {
-      // Remove "WebUI" suffix from device names and use last 6 chars of ID as fallback
+      // Clean device names by removing WebUI suffix and providing fallback identifier
       const deviceName = (discoveryResult.name || `whatwatt Go ${discoveryResult.id.slice(-6)}`).replace(/\s+WebUI\s*$/i, '');
       
       return {
@@ -46,7 +70,7 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
           port: discoveryResult.port || 80,
         },
         settings: {
-          // Default settings will be configured by the user during pairing
+          // User will configure settings during the pairing process
         }
       };
     });
@@ -56,21 +80,21 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
   }
 
   /**
-   * Manages the device pairing process with conditional password authentication.
-   * Tests device connectivity to determine if password is required, then guides user through appropriate flow.
+   * Manages the device pairing process with adaptive authentication flow.
+   * Determines authentication requirements by testing connectivity, then guides user through appropriate pairing steps.
    */
   async onPair(session) {
     let selectedDevice = null;
     let cachedPassword = '';
 
-    // Cache password for use across multiple pairing steps
+    // Store password for reuse across pairing flow steps
     session.setHandler('password_entered', async ({ password }) => {
       cachedPassword = (password || '').trim();
       this.log('Password received via password_entered handler:', cachedPassword ? '***' : '(none)');
       return true;
     });
 
-    // Validate password by testing device connection
+    // Test password validity by establishing device connection
     session.setHandler('test_password', async () => {
       if (!selectedDevice) {
         return { success: false, message: 'No device selected' };
@@ -94,16 +118,16 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
       }
     });
 
-    // Provide device list to pairing interface
+    // Supply discovered devices to the pairing interface
     session.setHandler('list_devices', async () => {
       const devices = await this.onPairListDevices();
       return devices;
     });
 
-    // Handle view navigation and determine authentication flow
+    // Control view navigation and determine authentication requirements
     session.setHandler('showView', async (viewId) => {
       if (viewId === 'loading') {
-        // Get the selected device from the session (Homey handles selection internally)
+        // Retrieve the selected device from session (Homey manages selection internally)
         try {
           const devices = await this.onPairListDevices();
           if (devices.length > 0) {
@@ -121,7 +145,7 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
         try {
           this.log('Testing connection during pairing for device:', selectedDevice.name);
           
-          // Test connection without password to determine if authentication is required
+          // Determine authentication requirements by testing connection without password
           const whatwattAPI = require('../../lib/whatwattapi');
           const connectionSuccess = await whatwattAPI.testDeviceConnection(
             { host: selectedDevice.store.address, port: selectedDevice.store.port },
@@ -130,30 +154,29 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
           );
           
           if (connectionSuccess) {
-            // No password needed, proceed directly to device creation
+            // Device accessible without authentication, proceed to device creation
             this.log('Device does not require password, proceeding to device creation');
             await session.showView('add_whatwatt_devices');
           } else {
-            // Password required, show password test view
+            // Authentication required, present password input interface
             this.log('Device requires password, showing password test view');
             await session.showView('pair_password');
           }
         } catch (error) {
           this.log('Connection test failed, assuming password is required:', error.message);
-          // If connection fails, assume password is required
+          // Default to password flow when connection testing fails
           await session.showView('pair_password');
         }
       }
       
       if (viewId === 'pair_password') {
-        // Always show password test view when navigating to it
+        // Display password input interface when requested
         return;
       }
       
       if (viewId === 'add_whatwatt_devices') {
-        // Store the tested password in ManagerSettings for the device
+        // Persist validated password for device operation
         if (selectedDevice && cachedPassword) {
-          // Store password in ManagerSettings using device ID as key
           const passwordKey = `password_${selectedDevice.data.id}`;
           await this.homey.settings.set(passwordKey, cachedPassword);
           this.log(`Added tested password to ManagerSettings for device ${selectedDevice.name} (${selectedDevice.data.id})`);
@@ -163,33 +186,45 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
   }
 
   /**
-   * Manages device repair process including password testing and capability reconfiguration.
-   * Allows users to update credentials and refresh device state without re-pairing.
+   * Manages device repair process for updating credentials and refreshing device state.
+   * Enables users to fix connection issues and update authentication without requiring re-pairing.
    */
   async onRepair(session, device) {
     let cachedPassword = '';
 
-    // Cache password from repair input view
+    // Store password from repair interface for validation
     session.setHandler('password_entered', async ({ password }) => {
       cachedPassword = (password || '').trim();
       this.log('Password received via repair password_entered handler:', cachedPassword ? '***' : '(none)');
       return true;
     });
 
-    // Perform device repair including connection testing and capability refresh
+    // Execute repair process including connection testing and device refresh
     session.setHandler('repair_device', async () => {
       this.log('Starting device repair process');
       
       try {
         const store = device.getStore();
         const settings = device.getSettings();
+        const deviceId = device.getData().id;
         
-        // Test the password first
+        // Attempt to discover current device IP address via mDNS
+        const { refreshDeviceIP } = require('../../lib/utils');
+        const ipResult = await refreshDeviceIP(device, this);
+        
+        if (!ipResult.success) {
+          this.log('IP discovery failed, using stored IP address');
+        }
+        
+        const connectionHost = ipResult.connectionHost;
+        const connectionPort = ipResult.connectionPort;
+        
+        // Validate password against current device address
         this.log('Testing password during repair:', cachedPassword ? '***' : '(none)');
         
         const whatwattAPI = require('../../lib/whatwattapi');
         const connectionSuccess = await whatwattAPI.testDeviceConnection(
-          { host: store.address, port: store.port },
+          { host: connectionHost, port: connectionPort },
           cachedPassword,
           settings.timeout || 10000
         );
@@ -201,14 +236,14 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
         
         this.log('Password test successful during repair');
         
-        // Stop current event stream
+        // Halt current event stream to prevent conflicts during repair
         if (device.eventStream) {
           this.log('Stopping current event stream for repair');
           device.eventStream.stop();
           device.eventStream = null;
         }
 
-        // Update device password in ManagerSettings
+        // Update stored password for device operation
         if (cachedPassword !== undefined) {
           const passwordKey = `password_${device.getData().id}`;
           if (cachedPassword) {
@@ -220,15 +255,15 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
           }
         }
 
-        // Refresh device capabilities
+        // Reconfigure device capabilities with updated credentials
         this.log('Re-running capability setup during repair');
         await device._setupCapabilities();
         
-        // Refresh meter information
+        // Refresh meter information with new connection
         this.log('Re-running meter information setup during repair');
         await device._setupMeterInformation();
         
-        // Restart event stream with updated credentials
+        // Restore event stream with updated authentication
         this.log('Restarting event stream after repair');
         device._initializeEventStream();
         

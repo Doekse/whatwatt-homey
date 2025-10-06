@@ -1,6 +1,6 @@
 {
   "id": "ch.whatwatt",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "compatibility": ">=12.4.0",
   "sdk": 3,
   "brandColor": "#000000",
