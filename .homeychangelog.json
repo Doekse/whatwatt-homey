@@ -19,5 +19,8 @@
   },
   "0.2.5": {
     "en": "Improved code structure and documentation"
+  },
+  "1.0.0": {
+    "en": "Added support for the 2.0.0 Firmware API and improved code structure"
   }
 }
