@@ -51,6 +51,7 @@ module.exports = class whatwattGoDevice extends Homey.Device {
 
     // Tracks setup completion to defer live updates until capabilities are properly initialized
     this._setupCompleted = this.getSetting('_setupCompleted') || false;
+    this._setupInProgress = false;
     this.log(`Device setup completed flag: ${this._setupCompleted}`);
   }
 
@@ -102,10 +103,15 @@ module.exports = class whatwattGoDevice extends Homey.Device {
     this.log('whatwatt Go Device has been added');
 
     try {
-      await this._initCapabilities();
       await this._initMeterInformation();
     } catch (error) {
-      this.error('Failed to set up device during device addition:', error.message);
+      this.error('Failed to set up meter information during device addition:', error.message);
+    }
+
+    try {
+      await this._initCapabilities();
+    } catch (error) {
+      this.error('Failed to set up device capabilities during device addition:', error.message);
     }
   }
 
@@ -116,22 +122,57 @@ module.exports = class whatwattGoDevice extends Homey.Device {
    * live updates operate on a properly configured and normalized capability set.
    * Called during device addition and repair operations.
    */
-  async _initCapabilities() {
+  async _initCapabilities({ force = false } = {}) {
+    if (this._setupCompleted && !force) {
+      this.log('Device capabilities already initialized, skipping initial setup');
+      return;
+    }
+
     this.log('Setting up device capabilities');
     const api = this._createAPI();
-    const data = await api.getReport();
 
-    // Convert REST API response to standardized format for consistent processing
-    const sseData = convertReport(data);
+    try {
+      const data = await api.getReport();
+      const sseData = convertReport(data);
 
-    // Calculate net power values to handle bidirectional energy flow
+      if (!this._hasUsableMeterData(sseData)) {
+        throw new Error('Report response did not contain usable meter data');
+      }
+
+      await this._setupCapabilitiesFromData(sseData, { powerInKilowatts: false });
+      await this._completeCapabilitySetup('report endpoint');
+      return;
+    } catch (error) {
+      this.log(`Report endpoint unavailable for initial capability setup, falling back to live data: ${error.message}`);
+    }
+
+    const liveData = await api.getLiveDataSnapshot();
+    if (!this._hasUsableMeterData(liveData)) {
+      throw new Error('Live data stream did not contain usable meter data');
+    }
+
+    await this._setupCapabilitiesFromData(liveData, { powerInKilowatts: true });
+    await this._completeCapabilitySetup('live data stream');
+  }
+
+  /**
+   * Initializes Homey capabilities from either normalized REST report data or
+   * native SSE live data.
+   *
+   * @private
+   * @param {Object} sseData - Flat whatwatt data payload
+   * @param {Object} options - Conversion options
+   * @param {boolean} options.powerInKilowatts - Whether power values need kW to W conversion
+   */
+  async _setupCapabilitiesFromData(sseData, { powerInKilowatts }) {
     const powerData = calculatePower(sseData);
+    const powerValue = (value) => (powerInKilowatts ? convertPower(value) : value);
 
-    // convertReport returns watts; no additional conversion needed for setupCapability
-    await setupCapability(this, 'measure_power', powerData.total);
-    await setupCapability(this, 'measure_power.phase1', powerData.phase1);
-    await setupCapability(this, 'measure_power.phase2', powerData.phase2);
-    await setupCapability(this, 'measure_power.phase3', powerData.phase3);
+    // Homey expects active/reactive power in W/var; live data provides kW/kvar.
+    await setupCapability(this, 'measure_power', powerValue(powerData.total));
+    await setupCapability(this, 'measure_power.phase1', powerValue(powerData.phase1));
+    await setupCapability(this, 'measure_power.phase2', powerValue(powerData.phase2));
+    await setupCapability(this, 'measure_power.phase3', powerValue(powerData.phase3));
 
     await setupCapability(this, 'measure_voltage', sseData.V_P1);
     await setupCapability(this, 'measure_voltage.phase2', sseData.V_P2);
@@ -149,17 +190,49 @@ module.exports = class whatwattGoDevice extends Homey.Device {
     await setupCapability(this, 'meter_power.exported_tariff1', sseData.E_Out_T1);
     await setupCapability(this, 'meter_power.exported_tariff2', sseData.E_Out_T2);
 
-    await setupCapability(this, 'measure_power_reactive_in', sseData.rP_In);
-    await setupCapability(this, 'measure_power_reactive_out', sseData.rP_Out);
+    await setupCapability(this, 'measure_power_reactive_in', powerValue(sseData.rP_In));
+    await setupCapability(this, 'measure_power_reactive_out', powerValue(sseData.rP_Out));
     await setupCapability(this, 'measure_power_factor', sseData.PF);
+  }
 
-    this.log('Initial capability setup completed');
+  /**
+   * Marks initial capability setup as completed and persists it across restarts.
+   *
+   * @private
+   * @param {string} source - Data source used for initial setup
+   */
+  async _completeCapabilitySetup(source) {
+    this.log(`Initial capability setup completed from ${source}`);
 
-    // Enable live data updates now that capabilities are properly configured
     this._setupCompleted = true;
-
-    // Persist setup state to survive Homey restarts
     await this.setSettings({ _setupCompleted: true });
+  }
+
+  /**
+   * Checks whether a data payload contains at least one meter value that can be
+   * used for capability setup.
+   *
+   * @private
+   * @param {Object} data - Flat whatwatt data payload
+   * @returns {boolean}
+   */
+  _hasUsableMeterData(data) {
+    if (!data || typeof data !== 'object') return false;
+    return [
+      'P_In',
+      'P_Out',
+      'P_P1_In',
+      'P_P2_In',
+      'P_P3_In',
+      'V_P1',
+      'V_P2',
+      'V_P3',
+      'I_P1',
+      'I_P2',
+      'I_P3',
+      'E_In',
+      'E_Out',
+    ].some((key) => data[key] !== null && data[key] !== undefined);
   }
 
   /**
@@ -315,6 +388,11 @@ module.exports = class whatwattGoDevice extends Homey.Device {
   async _initializeEventStream() {
     const config = this._getConnectionConfig();
     const settings = this.getSettings();
+    if (this.eventStream) {
+      this.eventStream.stop();
+      this.eventStream = null;
+    }
+
     this.eventStream = new WhatwattEventStream({
       homey: this.homey,
       host: config.host,
@@ -333,7 +411,9 @@ module.exports = class whatwattGoDevice extends Homey.Device {
       driver: this.driver,
     });
 
-    await this.eventStream.start();
+    this.eventStream.start().catch((error) => {
+      this.error('Failed to start live data stream:', error.message);
+    });
   }
 
   /**
@@ -415,9 +495,22 @@ module.exports = class whatwattGoDevice extends Homey.Device {
    * @param {Object} data - Parsed live data payload
    */
   async _onLiveData(data) {
-    if (this._isDeleted || !this._setupCompleted) return;
+    if (this._isDeleted) return;
 
     try {
+      if (!this._setupCompleted) {
+        if (this._setupInProgress) return;
+
+        this._setupInProgress = true;
+        try {
+          this.log('Initializing capabilities from first live data event');
+          await this._setupCapabilitiesFromData(data, { powerInKilowatts: true });
+          await this._completeCapabilitySetup('first live data event');
+        } finally {
+          this._setupInProgress = false;
+        }
+      }
+
       const powerData = calculatePower(data);
       for (const [capabilityId, getValue] of LIVE_DATA_CAPABILITIES) {
         const value = getValue(data, powerData);

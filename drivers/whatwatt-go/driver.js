@@ -248,11 +248,11 @@ module.exports = class whatwattGoDriver extends Homey.Driver {
       }
     }
 
-    this.log('Re-running capability setup during repair');
-    await device._initCapabilities();
-
     this.log('Re-running meter information setup during repair');
     await device._initMeterInformation();
+
+    this.log('Re-running capability setup during repair');
+    await device._initCapabilities({ force: true });
 
     this.log('Restarting event stream after repair');
     device._initializeEventStream();
